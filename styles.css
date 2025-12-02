@@ -1,0 +1,203 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+body {
+  background: #f5f5f5;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* ---------- GENERAL CARD ---------- */
+.card {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 18px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.06);
+  transition: 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* ---------- INTRO ---------- */
+header h1 {
+  font-size: 32px;
+  margin-bottom: 18px;
+  font-weight: 700;
+}
+
+.card p {
+  line-height: 1.7;
+  color: #666;
+  margin-bottom: 25px;
+  font-size: 15px;
+}
+
+.btn-contact {
+  background: #111;
+  color: #fff;
+  padding: 12px 25px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-size: 14px;
+  display: inline-block;
+  margin-bottom: 25px;
+  transition: 0.3s;
+  font-weight: 500;
+}
+
+.btn-contact:hover {
+  background: #333;
+}
+
+nav.socials {
+  display: flex;
+  gap: 15px;
+}
+
+nav.socials a {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-decoration: none;
+  font-size: 18px;
+  transition: 0.3s;
+}
+
+nav.socials a:hover {
+  background: #444;
+}
+
+/* ---------- LAYOUT ROW (PROFILE + CONTRIBUTOR) ---------- */
+.two-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+}
+
+/* mobile responsive */
+@media (max-width: 720px) {
+  .two-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---------- PROFILE CARD ---------- */
+.profile-card {
+  text-align: center;
+  padding: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-card img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 18px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.profile-card h2 {
+  font-size: 24px;
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.profile-card p {
+  font-size: 15px;
+  color: #666;
+}
+
+/* ---------- CONTRIBUTOR STYLE ---------- */
+.contributor-card {
+  padding: 35px;
+}
+
+.contributor-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.contributor-header img {
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.contributor-header div h3 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.contributor-header div span {
+  font-size: 14px;
+  color: #777;
+}
+
+.streak {
+  margin-top: 15px;
+  background: #f2f2f2;
+  padding: 12px 15px;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #444;
+  display: inline-block;
+  font-weight: 500;
+}
+
+.skills {
+  margin-top: 20px;
+}
+
+.skill {
+  margin-bottom: 12px;
+}
+
+.skill label {
+  font-size: 14px;
+  display: block;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.bar {
+  width: 100%;
+  height: 10px;
+  background: #e5e5e5;
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.bar span {
+  display: block;
+  height: 100%;
+  border-radius: 50px;
+  background: #111;
+}

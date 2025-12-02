@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Card Minimalist Semantic</title>
+
+    <!-- INTER FONT -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- FONT AWESOME -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+
+  <body>
+    <main>
+      <!-- INTRO CARD (Tetap di atas) -->
+      <article class="card">
+        <header>
+          <h1>Hi, Welcome there</h1>
+        </header>
+
+        <section>
+          <p>
+            As a Junior Fullstack Web Developer, I possess expertise in the
+            entire software development lifecycle, from initial concept to
+            deployment. I excel at translating UI/UX designs into functional and
+            engaging user interfaces, while ensuring robust server-side logic
+            and secure data management. Driven by strong curiosity, I
+            continuously explore the latest industry trends and apply best
+            practices to deliver optimal digital solutions.
+          </p>
+        </section>
+
+        <a href="#" class="btn-contact">Contact</a>
+
+        <nav class="socials" aria-label="Social Media Links">
+          <a
+            href="https://www.linkedin.com/in/muhammad-ainur-rofiq-as-subaithi/"
+            aria-label="LinkedIn"
+            ><i class="fab fa-linkedin-in"></i
+          ></a>
+          <a
+            href="https://www.instagram.com/ainur_rofiq.a/"
+            aria-label="Instagram"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a href="https://www.facebook.com/ainur.r.ash/" aria-label="Facebook"
+            ><i class="fab fa-facebook-f"></i
+          ></a>
+          <a href="https://www.tiktok.com/@ainur_rofiq.a" aria-label="TikTok"
+            ><i class="fab fa-tiktok"></i
+          ></a>
+        </nav>
+      </article>
+
+      <!-- PROFILE + CONTRIBUTOR DALAM 1 ROW -->
+      <section class="two-cards">
+        <!-- PROFILE CARD -->
+        <article class="card profile-card">
+          <div>
+            <img src="foto1.jpg" alt="Profile Photo" />
+            <h2>Ainur Rofiq</h2>
+            <p>FullStack Web Development</p>
+          </div>
+        </article>
+
+        <!-- CONTRIBUTOR CARD -->
+        <article class="card contributor-card">
+          <div class="contributor-header">
+            <img src="foto1.jpg" alt="Contributor Photo" />
+
+            <div>
+              <h3>@ainurrofiq</h3>
+              <span>Contributor • Backend & Frontend</span>
+            </div>
+          </div>
+
+          <div class="streak">🔥 127-day contribution streak</div>
+
+          <section class="skills">
+            <div class="skill">
+              <label>JavaScript</label>
+              <div class="bar"><span style="width: 85%"></span></div>
+            </div>
+
+            <div class="skill">
+              <label>PHP / Laravel</label>
+              <div class="bar"><span style="width: 90%"></span></div>
+            </div>
+
+            <div class="skill">
+              <label>Vue / React</label>
+              <div class="bar"><span style="width: 70%"></span></div>
+            </div>
+
+            <div class="skill">
+              <label>SQL / Database</label>
+              <div class="bar"><span style="width: 75%"></span></div>
+            </div>
+          </section>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>
