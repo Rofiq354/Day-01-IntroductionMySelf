@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Card Minimalist Semantic</title>
+
+    <!-- INTER FONT -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- FONT AWESOME -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <!-- Boostrap 5 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="stylesheet" href="/src/css/style.css" />
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="/src/img/brand.png" alt="Ainur Rofiq" height="18" />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo02"
+          aria-controls="navbarTogglerDemo02"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/index.html"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">My Project</a>
+            </li>
+          </ul>
+          <button
+            class="btn btn-primary"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
+          >
+            Contact Me
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <section class="container-fluid bg-body-secondary py-5">
+        <!-- Form add my project -->
+        <div class="container">
+          <h1 class="text-center">ADD MY PROJECT</h1>
+          <form
+            action="#"
+            id="addProject"
+            class="d-flex"
+            style="flex-direction: column"
+          >
+            <div class="mb-3">
+              <label for="projectName" class="form-label">Project Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="projectName"
+                name="title"
+              />
+            </div>
+            <div
+              class="d-flex justify-content-start gap-3 flex-md-row flex-column"
+            >
+              <div class="mb-3">
+                <label for="startDate" class="form-label">Start Date</label>
+                <input type="date" class="form-control" id="startDate" />
+              </div>
+              <div class="mb-3">
+                <label for="endDate" class="form-label">End Date</label>
+                <input type="date" class="form-control" id="endDate" />
+              </div>
+              <div class="mb-3">
+                <label for="teknologies" class="form-label">Teknologies</label>
+                <div class="d-flex justify-content-between flex-wrap gap-2">
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="node-js"
+                      id="nodeJs"
+                    />
+                    <label class="form-check-label" for="nodeJs">
+                      <small class="text-secondary">Node Js</small>
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="next-js"
+                      id="nextJs"
+                    />
+                    <label class="form-check-label" for="nextJs">
+                      <small class="text-secondary">Next Js</small>
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="react-js"
+                      id="reactJs"
+                    />
+                    <label class="form-check-label" for="reactJs">
+                      <small class="text-secondary">React Js</small>
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      value="typeScript"
+                      id="typeScript"
+                    />
+                    <label class="form-check-label" for="typeScript">
+                      <small class="text-secondary">TypeScript</small>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea
+                class="form-control"
+                id="description"
+                rows="6"
+              ></textarea>
+            </div>
+            <div class="mb-3 pt-2">
+              <label for="uploadImage" class="form-label">Upload Image</label>
+              <input type="file" class="form-control" id="uploadImage" />
+            </div>
+            <div class="mb-3 pt-3 d-flex justify-content-end">
+              <button
+                type="submit"
+                class="btn btn-primary"
+                style="width: 200px"
+                id="submitButton"
+              >
+                Send
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- My Project -->
+      <section class="container-fluid bg-body-light py-5">
+        <div class="container">
+          <h1 class="text-center">MY PROJECT</h1>
+          <div class="content mt-4">
+            <div class="d-flex gap-3 flex-wrap justify-content-center">
+              <div class="card" style="width: 18rem">
+                <img
+                  src="/src/img/code.jpg"
+                  class="card-img-top"
+                  height="150px"
+                  alt="Code Image"
+                />
+                <div class="card-body">
+                  <h5 class="card-title">Binary Code</h5>
+                  <h6 class="card-subtitle mb-2 text-body-secondary">
+                    <small> Durasi: 3 bulan </small>
+                  </h6>
+                  <p class="card-text">
+                    Some quick example text to build on the card.
+                  </p>
+                  <a href="#" class="btn btn-primary">Edit</a>
+                  <a href="#" class="btn btn-primary">Delete</a>
+                </div>
+              </div>
+              <div class="card" style="width: 18rem">
+                <img
+                  src="/src/img/code.jpg"
+                  class="card-img-top"
+                  height="150px"
+                  alt="Code Image"
+                />
+                <div class="card-body">
+                  <h5 class="card-title">Binary Code</h5>
+                  <h6 class="card-subtitle mb-2 text-body-secondary">
+                    <small> Durasi: 3 bulan </small>
+                  </h6>
+                  <p class="card-text">
+                    Some quick example text to build on the card.
+                  </p>
+                  <a href="#" class="btn btn-primary">Edit</a>
+                  <a href="#" class="btn btn-primary">Delete</a>
+                </div>
+              </div>
+              <div class="card" style="width: 18rem">
+                <img
+                  src="/src/img/code.jpg"
+                  class="card-img-top"
+                  height="150px"
+                  alt="Code Image"
+                />
+                <div class="card-body">
+                  <h5 class="card-title">Binary Code</h5>
+                  <h6 class="card-subtitle mb-2 text-body-secondary">
+                    <small> Durasi: 3 bulan </small>
+                  </h6>
+                  <p class="card-text">
+                    Some quick example text to build on the card.
+                  </p>
+                  <a href="#" class="btn btn-primary">Edit</a>
+                  <a href="#" class="btn btn-primary">Delete</a>
+                </div>
+              </div>
+              <div class="card" style="width: 18rem">
+                <img
+                  src="/src/img/code.jpg"
+                  class="card-img-top"
+                  height="150px"
+                  alt="Code Image"
+                />
+                <div class="card-body">
+                  <h5 class="card-title">Binary Code</h5>
+                  <h6 class="card-subtitle mb-2 text-body-secondary">
+                    <small> Durasi: 3 bulan </small>
+                  </h6>
+                  <p class="card-text">
+                    Some quick example text to build on the card.
+                  </p>
+                  <a href="#" class="btn btn-primary">Edit</a>
+                  <a href="#" class="btn btn-primary">Delete</a>
+                </div>
+              </div>
+              <div class="card" style="width: 18rem">
+                <img
+                  src="/src/img/code.jpg"
+                  class="card-img-top"
+                  height="150px"
+                  alt="Code Image"
+                />
+                <div class="card-body">
+                  <h5 class="card-title">Binary Code</h5>
+                  <h6 class="card-subtitle mb-2 text-body-secondary">
+                    <small> Durasi: 3 bulan </small>
+                  </h6>
+                  <p class="card-text">
+                    Some quick example text to build on the card.
+                  </p>
+                  <a href="#" class="btn btn-primary">Edit</a>
+                  <a href="#" class="btn btn-primary">Delete</a>
+                </div>
+              </div>
+              <div class="card" style="width: 18rem">
+                <img
+                  src="/src/img/code.jpg"
+                  class="card-img-top"
+                  height="150px"
+                  alt="Code Image"
+                />
+                <div class="card-body">
+                  <h5 class="card-title">Binary Code</h5>
+                  <h6 class="card-subtitle mb-2 text-body-secondary">
+                    <small> Durasi: 3 bulan </small>
+                  </h6>
+                  <p class="card-text">
+                    Some quick example text to build on the card.
+                  </p>
+                  <a href="#" class="btn btn-primary">Edit</a>
+                  <a href="#" class="btn btn-primary">Delete</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modal Contact Me -->
+    <div
+      class="modal fade"
+      id="staticBackdrop"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-scrollable">
+        <form class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+              Modal title
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Nama Lengkap</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Masukkan nama kamu"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                placeholder="Email aktif"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Nomor HP</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Contoh: 0812xxxxxxx"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Subjek</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Judul pesan"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Pesan</label>
+              <textarea
+                class="form-control"
+                rows="4"
+                placeholder="Tulis pesan kamu di sini"
+              ></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary">Send</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="/src/js/project.js"></script>
+  </body>
+</html>
