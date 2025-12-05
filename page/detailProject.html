@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Card Minimalist Semantic</title>
+
+    <!-- INTER FONT -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- FONT AWESOME -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <!-- Boostrap 5 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="stylesheet" href="/src/css/style.css" />
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container">
+        <a class="navbar-brand" href="#">
+          <img src="/src/img/brand.png" alt="Ainur Rofiq" height="18" />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarTogglerDemo02"
+          aria-controls="navbarTogglerDemo02"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/index.html"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/page/project.html"
+                >My Project</a
+              >
+            </li>
+          </ul>
+          <button
+            class="btn btn-primary"
+            type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
+          >
+            Contact Me
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <section
+        class="container-fluid bg-body-secondary py-5"
+        id="detailProject"
+      >
+        <!-- Detail Project -->
+        <div class="container">
+          <h1 class="text-center mb-4">ADD MY PROJECT</h1>
+
+          <div class="row align-items-center g-4">
+            <!-- Image -->
+            <div class="col-12 col-md-6">
+              <img
+                src="/src/img/code.jpg"
+                alt="code image"
+                class="img-fluid rounded"
+                style="height: 300px; width: 100%"
+              />
+            </div>
+
+            <!-- Detail Info -->
+            <div class="col-12 col-md-6">
+              <div class="d-flex flex-column gap-4">
+                <!-- Duration -->
+                <div>
+                  <h4>Duration</h4>
+
+                  <p class="mb-1">
+                    <i
+                      class="fa-regular fa-calendar-days me-2 text-secondary"
+                    ></i>
+                    12 Jan 2026 - 11 Feb 2026
+                  </p>
+
+                  <p class="fw-semibold">
+                    <i
+                      class="fa-solid fa-hourglass-half me-2 text-secondary"
+                    ></i>
+                    1 Month
+                  </p>
+                </div>
+
+                <!-- Technologies -->
+                <div>
+                  <h4>Technologies</h4>
+
+                  <div class="row row-cols-2 g-2">
+                    <div class="col">
+                      <p class="mb-0">
+                        <i class="fa-brands fa-html5 me-2 text-danger"></i>
+                        HTML
+                      </p>
+                    </div>
+
+                    <div class="col">
+                      <p class="mb-0">
+                        <i class="fa-brands fa-css3-alt me-2 text-primary"></i>
+                        CSS
+                      </p>
+                    </div>
+
+                    <div class="col">
+                      <p class="mb-0">
+                        <i class="fa-brands fa-js me-2 text-warning"></i>
+                        JavaScript
+                      </p>
+                    </div>
+
+                    <div class="col">
+                      <p class="mb-0">
+                        <i class="fa-brands fa-bootstrap me-2 text-purple"></i>
+                        Bootstrap
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Description -->
+          <p class="mt-4">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea dolorem
+            vel sit ratione ullam molestiae? Quae minus minima qui voluptatibus
+            nihil odio maiores. Ipsa quam totam voluptatibus eaque amet
+            molestiae!
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modal Contact Me -->
+    <div
+      class="modal fade"
+      id="staticBackdrop"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="staticBackdropLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-scrollable">
+        <form class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">
+              Modal title
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-3">
+              <label class="form-label">Nama Lengkap</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Masukkan nama kamu"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input
+                type="email"
+                class="form-control"
+                placeholder="Email aktif"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Nomor HP</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Contoh: 0812xxxxxxx"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Subjek</label>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Judul pesan"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Pesan</label>
+              <textarea
+                class="form-control"
+                rows="4"
+                placeholder="Tulis pesan kamu di sini"
+              ></textarea>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="submit" class="btn btn-primary">Send</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script src="/src/js/detailProject.js"></script>
+  </body>
+</html>
