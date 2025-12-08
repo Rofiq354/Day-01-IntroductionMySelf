@@ -13,8 +13,25 @@ const techIconMap = {
   "node-js": `<i class="fa-brands fa-node-js me-2 text-success"></i> Node Js`,
   "next-js": `<i class="fa-solid fa-n me-2 text-dark"></i> Next Js`,
   "react-js": `<i class="fa-brands fa-react me-2 text-info"></i> React Js`,
-  "typescript": `<i class="fa-brands fa-typescript me-2 text-primary"></i> TypeScript`,
+  typescript: `<i class="fa-brands fa-typescript me-2 text-primary"></i> TypeScript`,
 };
+
+function formatTanggalIndonesia(dateString) {
+  const parts = dateString.split("-"); // ["1992", "11", "11"]
+  // Parameter: tahun, bulan (0-indexed, jadi 11 November adalah bulan 10), hari
+  const dateObj = new Date(parts[0], parts[1] - 1, parts[2]);
+
+  // 2. Gunakan Intl.DateTimeFormat untuk pemformatan lokal
+  const options = {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  };
+
+  const formatter = new Intl.DateTimeFormat("id-ID", options);
+
+  return formatter.format(dateObj);
+}
 
 getData.forEach((gd) => {
   sectionEl.innerHTML += `
@@ -43,7 +60,9 @@ getData.forEach((gd) => {
                     <i
                         class="fa-regular fa-calendar-days me-2 text-secondary"
                     ></i>
-                    12 Jan 2026 - 11 Feb 2026
+                    ${formatTanggalIndonesia(
+                      gd.startDate
+                    )} - ${formatTanggalIndonesia(gd.endDate)}
                     </p>
     
                     <p class="fw-semibold">
