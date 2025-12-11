@@ -1,0 +1,70 @@
+<!-- Modal Contact Me -->
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable">
+    <form class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+          Modal title
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label class="form-label">Nama Lengkap</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Masukkan nama kamu"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" placeholder="Email aktif" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Nomor HP</label>
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Contoh: 0812xxxxxxx"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Subjek</label>
+          <input type="text" class="form-control" placeholder="Judul pesan" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Pesan</label>
+          <textarea
+            class="form-control"
+            rows="4"
+            placeholder="Tulis pesan kamu di sini"
+          ></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="submit" class="btn btn-primary">Send</button>
+      </div>
+    </form>
+  </div>
+</div>

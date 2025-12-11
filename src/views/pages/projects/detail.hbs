@@ -1,0 +1,80 @@
+<main>
+  <section class="container-fluid bg-body-secondary py-5" id="detailProject">
+    <!-- Detail Project -->
+    <div class="container">
+      <h1 class="text-center mb-4">{{project.projectName}}</h1>
+
+      <div class="row align-items-center g-4">
+        <!-- Image -->
+        <div class="col-12 col-md-6">
+          <img
+            src="{{project.image}}"
+            alt="code image"
+            class="img-fluid rounded"
+            style="height: 300px; width: 100%; object-fit: cover;"
+          />
+        </div>
+
+        <!-- Detail Info -->
+        <div class="col-12 col-md-6">
+          <div class="d-flex flex-column gap-4">
+            <!-- Duration -->
+            <div>
+              <h4>Duration</h4>
+
+              <p class="mb-1">
+                <i class="fa-regular fa-calendar-days me-2 text-secondary"></i>
+                12 Jan 2026 - 11 Feb 2026
+              </p>
+
+              <p class="fw-semibold">
+                <i class="fa-solid fa-hourglass-half me-2 text-secondary"></i>
+                1 Month
+              </p>
+            </div>
+
+            <!-- Technologies -->
+            <div>
+              <h4>Technologies</h4>
+
+              <div class="row row-cols-2 g-2">
+                <div class="col">
+                  <p class="mb-0">
+                    <i class="fa-brands fa-html5 me-2 text-danger"></i>
+                    HTML
+                  </p>
+                </div>
+
+                <div class="col">
+                  <p class="mb-0">
+                    <i class="fa-brands fa-css3-alt me-2 text-primary"></i>
+                    CSS
+                  </p>
+                </div>
+
+                <div class="col">
+                  <p class="mb-0">
+                    <i class="fa-brands fa-js me-2 text-warning"></i>
+                    JavaScript
+                  </p>
+                </div>
+
+                <div class="col">
+                  <p class="mb-0">
+                    <i class="fa-brands fa-bootstrap me-2 text-purple"></i>
+                    Bootstrap
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <p class="mt-4">
+        {{project.description}}
+      </p>
+    </div>
+  </section>
+</main>

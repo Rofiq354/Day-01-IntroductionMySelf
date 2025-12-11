@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1765439856566,
+    "projectName": "Testing Project",
+    "startDate": "2012-11-29",
+    "endDate": "2013-03-11",
+    "description": "Officiis suscipit voluptatem Voluptatum adipisicing enim unde minus ut minima laudantium anim",
+    "teknologies": ["next-js", "react-js"],
+    "image": "/public/images/code.jpg"
+  },
+  {
+    "id": 1765439856567,
+    "projectName": "Honorato Kelley",
+    "startDate": "2015-11-29",
+    "endDate": "2016-03-11",
+    "description": "Rerum quia qui omnis laboriosam est ipsum officia cillum sint adipisicing veniam laudantium est",
+    "teknologies": ["next-js", "react-js"],
+    "image": "/public/images/brand.png"
+  },
+  {
+    "id": 1765439856568,
+    "projectName": "Sarah Gallagher",
+    "startDate": "2012-02-29",
+    "endDate": "2012-11-11",
+    "description": "Laudantium et pariatur Porro et voluptatem modi placeat in",
+    "teknologies": ["next-js", "react-js"],
+    "image": "/public/images/foto1.jpg"
+  }
+]
