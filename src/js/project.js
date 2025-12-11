@@ -65,23 +65,101 @@ const loadProjects = () => {
   }
 };
 
-const renderCard = ({ id, projectName, description, image }) => {
+// helper: baca File jadi Data URL (base64)
+const readFileAsDataURL = (file) =>
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (err) => reject(err);
+    reader.readAsDataURL(file);
+  });
+
+// validasi file: tipe & ukuran (< 100KB)
+const validateImageFile = (file) => {
+  if (!file) return { ok: true }; // tidak wajib
+  const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+  if (!allowedTypes.includes(file.type)) {
+    return { ok: false, message: "Format file harus JPG, JPEG, atau PNG." };
+  }
+  const maxSize = 100 * 1024; // 100 KB
+  if (file.size > maxSize) {
+    return { ok: false, message: "Ukuran file harus kurang dari 100 KB." };
+  }
+  return { ok: true };
+};
+
+const calculateDuration = (startDate, endDate) => {
+  // Jika salah satu tanggal kosong atau "-", return "-"
+  if (!startDate || !endDate || startDate === "-" || endDate === "-") {
+    return "-";
+  }
+
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+
+  // Hitung selisih dalam milliseconds
+  const diffTime = Math.abs(end - start);
+
+  // Konversi ke hari
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  // Konversi ke bulan (approximate)
+  const diffMonths = Math.floor(diffDays / 30);
+
+  // Return format yang lebih readable
+  if (diffMonths > 0) {
+    return `${diffMonths} bulan ${diffDays % 30} hari`;
+  } else {
+    return `${diffDays} hari`;
+  }
+};
+
+const truncateWords = (text = "", maxWords = 30) => {
+  const words = String(text).trim().split(/\s+/).filter(Boolean);
+  if (words.length <= maxWords) return words.join(" ");
+  return words.slice(0, maxWords).join(" ") + "...";
+};
+
+const renderCard = ({
+  id,
+  projectName,
+  startDate,
+  endDate,
+  description,
+  image,
+}) => {
   // Create card element
   const card = document.createElement("div");
   card.setAttribute("class", "card");
   card.style.width = "18rem";
 
-  // Create image element
+  // Create image element - gunakan data URL jika ada, else fallback
   const imageEl = document.createElement("img");
   const imageAttribute = {
-    src: "/src/img/code.jpg",
+    src: image && image !== "-" ? image : "/src/img/code.jpg",
     class: "card-img-top",
     height: "150px",
-    alt: image,
+    alt: projectName || "project image",
   };
   for (const key in imageAttribute) {
     imageEl.setAttribute(key, imageAttribute[key]);
   }
+
+  imageEl.style.objectFit = "cover";
+
+  // HITUNG DURASI dari startDate dan endDate
+  const duration = calculateDuration(startDate, endDate);
+
+  // potong title & deskripsi
+  const shortTitle = truncateWords(
+    projectName === undefined ? "-" : projectName,
+    2
+  );
+
+  const shortDesc = truncateWords(
+    description === undefined ? "-" : description,
+    15
+  );
 
   // Create card-body element
   const cardBody = document.createElement("div");
@@ -90,13 +168,13 @@ const renderCard = ({ id, projectName, description, image }) => {
 
   cardBody.innerHTML += `
     <a href="/page/detailProject.html?id=${id}" class="card-title text-decoration-none">
-      <h5>${projectName}</h5>
+      <h5>${shortTitle}</h5>
     </a>
     <h6 class="card-subtitle mb-2 text-body-secondary">
-      <small> Durasi: 3 bulan </small>
+      <small> Durasi: ${duration} </small>
     </h6>
     <p class="card-text">
-      ${description}
+      ${shortDesc}
     </p>
     <a href="/page/project.html?id=${id}" id="editProjectBtn" class="btn btn-primary">Edit</a>
     <button onclick="deleteProject(${id})" class="btn btn-primary">Delete</Delete>
@@ -109,18 +187,45 @@ const renderCard = ({ id, projectName, description, image }) => {
   return card;
 };
 
-loadProjects();
+const refreshCards = () => {
+  // Kosongkan semua cards yang ada
+  cardListElement.innerHTML = "";
+  // Load ulang projects dari storage dan render
+  loadProjects();
+};
 
-const addProject = (e) => {
+refreshCards();
+
+// make addProject async to read file
+const addProject = async (e) => {
   e.preventDefault();
 
   const checkBoxTeknologies = form.querySelectorAll(
     'input[name="technologies"]:checked'
   );
-  const fileName = !inputImage.files[0] ? "-" : inputImage.files[0].name;
 
   const teknologies = [];
   checkBoxTeknologies.forEach((t) => teknologies.push(t.value));
+
+  const file = inputImage.files && inputImage.files[0];
+
+  // Validasi file
+  const validation = validateImageFile(file);
+  if (!validation.ok) {
+    alert(validation.message);
+    return;
+  }
+
+  // baca file jika ada, simpan sebagai DataURL, jika tidak maka "-"
+  let fileData = "-";
+  if (file) {
+    try {
+      fileData = await readFileAsDataURL(file);
+    } catch (err) {
+      console.warn("Gagal membaca file:", err);
+      fileData = "-";
+    }
+  }
 
   result.push(
     objProject({
@@ -129,14 +234,15 @@ const addProject = (e) => {
       endDate: inputEndDate.value || "-",
       description: inputDescription.value || "-",
       teknologies: teknologies,
-      image: fileName,
+      image: fileData,
     })
   );
   setStorage();
 
   alert("data berhasil ditambah dengan nama: " + inputProjectName.value);
 
-  window.location.reload();
+  form.reset();
+  refreshCards();
 };
 
 const editProjectForm = (id) => {
@@ -181,7 +287,8 @@ const editProjectForm = (id) => {
   form.addEventListener("submit", updateProject);
 };
 
-const updateProject = (e) => {
+// updateProject jadi async untuk baca file baru jika ada
+const updateProject = async (e) => {
   e.preventDefault();
 
   const formId = form.getAttribute("data-editing-id");
@@ -205,14 +312,29 @@ const updateProject = (e) => {
     'input[name="technologies"]:checked'
   );
 
-  // Siapkan nama file gambar (pertahankan yang lama jika tidak ada upload baru)
-  const fileName =
-    !inputImage.files || inputImage.files.length === 0
-      ? result[projectIndex].image
-      : inputImage.files[0].name;
-
   const teknologies = [];
   checkBoxTeknologies.forEach((t) => teknologies.push(t.value));
+
+  // Siapkan file baru jika ada
+  const file = inputImage.files && inputImage.files[0];
+
+  // Validasi file baru jika dipilih
+  const validation = validateImageFile(file);
+  if (!validation.ok) {
+    alert(validation.message);
+    return;
+  }
+
+  // baca file baru jika ada, jika tidak pakai image lama
+  let fileData = result[projectIndex].image; // default ke yg lama
+  if (file) {
+    try {
+      fileData = await readFileAsDataURL(file);
+    } catch (err) {
+      console.warn("Gagal membaca file:", err);
+      // tetap pakai yg lama
+    }
+  }
 
   // Ambil referensi ke objek yang sudah ada di array
   const existingProject = result[projectIndex];
@@ -223,7 +345,7 @@ const updateProject = (e) => {
   existingProject.endDate = inputEndDate.value || "-";
   existingProject.description = inputDescription.value || "-";
   existingProject.teknologies = teknologies;
-  existingProject.image = fileName;
+  existingProject.image = fileData;
 
   setStorage();
 
@@ -259,7 +381,7 @@ const deleteProject = (id) => {
 
   alert("Proyek berhasil dihapus.");
 
-  window.location.reload();
+  refreshCards();
 };
 
 urlType();

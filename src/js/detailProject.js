@@ -33,6 +33,32 @@ function formatTanggalIndonesia(dateString) {
   return formatter.format(dateObj);
 }
 
+const calculateDuration = (startDate, endDate) => {
+  // Jika salah satu tanggal kosong atau "-", return "-"
+  if (!startDate || !endDate || startDate === "-" || endDate === "-") {
+    return "-";
+  }
+
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+
+  // Hitung selisih dalam milliseconds
+  const diffTime = Math.abs(end - start);
+
+  // Konversi ke hari
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  // Konversi ke bulan (approximate)
+  const diffMonths = Math.floor(diffDays / 30);
+
+  // Return format yang lebih readable
+  if (diffMonths > 0) {
+    return `${diffMonths} Month ${diffDays % 30} Day`;
+  } else {
+    return `${diffDays} hari`;
+  }
+};
+
 getData.forEach((gd) => {
   sectionEl.innerHTML += `
         <div class="container">
@@ -42,10 +68,12 @@ getData.forEach((gd) => {
             <!-- Image -->
             <div class="col-12 col-md-6">
                 <img
-                src="/src/img/code.jpg"
+                src="${
+                  gd.image && gd.image !== "-" ? gd.image : "/src/img/code.jpg"
+                }"
                 alt="${gd.image}"
                 class="img-fluid rounded"
-                style="height: 300px; width: 100%"
+                style="height: 300px; width: 100%; object-fit: cover;"
                 />
             </div>
     
@@ -69,7 +97,7 @@ getData.forEach((gd) => {
                     <i
                         class="fa-solid fa-hourglass-half me-2 text-secondary"
                     ></i>
-                    1 Month
+                    ${calculateDuration(gd.startDate, gd.endDate)}
                     </p>
                 </div>
     
