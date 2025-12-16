@@ -1,39 +1,20 @@
 import { Pool } from "pg";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const db = new Pool({
-  host: "localhost",
-  user: "postgres",
-  port: 5432,
-  database: "test_db",
-  password: "rofiq126",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  port: process.env.DB_PORT,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
   max: 10,
 });
 
 db.connect().then((result) => result);
 
 export default db;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // const test = db.query("SELECT * FROM public.projects");
 

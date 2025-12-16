@@ -1,0 +1,68 @@
+<div
+  class="modal fade"
+  id="authModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+>
+  <div class="modal-dialog modal-dialog-scrollable">
+    <form id="authForm" class="modal-content" method="post">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="authModalTitle">
+          Form Register
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Username -->
+        <div class="mb-3" id="usernameField">
+          <label class="form-label">Username</label>
+          <input
+            type="text"
+            class="form-control"
+            name="username"
+            placeholder="Masukkan username"
+          />
+        </div>
+
+        <!-- Email -->
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            placeholder="Email aktif"
+            required
+          />
+        </div>
+
+        <!-- Password -->
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            placeholder="Masukkan password"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="submit" class="btn btn-primary" id="authSubmitBtn">
+          Register
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

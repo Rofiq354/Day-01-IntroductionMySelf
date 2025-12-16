@@ -1,9 +1,11 @@
 import db from "../config/db.js";
+import techIcon from "../helper/techIcon.js";
 
 export const getProjects = async (req, res) => {
-  const result = await db.query("SELECT * FROM public.projects");
+  const projectResult = await db.query("SELECT * FROM public.projects");
+  const techResult = await db.query("SELECT * FROM public.tech_stacks");
 
-  const projects = result.rows.map((data) => {
+  const projects = projectResult.rows.map((data) => {
     return {
       id: data.id,
       projectName: data.name,
@@ -14,7 +16,17 @@ export const getProjects = async (req, res) => {
     };
   });
 
-  res.render("projects", { title: "Projects", projects });
+  const techs = techResult.rows;
+
+  res.render("projects", {
+    title: "Projects",
+    typeTitleForm: "add",
+    btnName: "create",
+    projects,
+    formUrl: `/projects`,
+    project: "",
+    techs,
+  });
 };
 
 export const getDetailProject = async (req, res) => {
@@ -25,7 +37,22 @@ export const getDetailProject = async (req, res) => {
   }
 
   const result = await db.query(
-    "SELECT * FROM public.projects WHERE id = $1 LIMIT 1",
+    `
+    SELECT
+      p.name,
+      p.description,
+      p.image,
+      p.start_date,
+      p.end_date,
+      ts.name AS tech_name,
+      ts.fa_icon,
+      ts.icons8_url,
+      ts.color_icon
+    FROM projects p
+    LEFT JOIN project_tech_stacks pts ON pts.project_id = p.id
+    LEFT JOIN tech_stacks ts ON ts.id = pts.tech_stack_id
+    WHERE p.id = $1
+    `,
     [projectId]
   );
 
@@ -33,24 +60,36 @@ export const getDetailProject = async (req, res) => {
     return res.status(404).send("Project not found");
   }
 
-  const { name, description, image, start_date, end_date, technologies } =
-    result.rows[0];
+  console.log(result);
 
-  // const techStack = Array(technologies.toLowerCase());
+  // Ambil data project dari baris pertama
+  const { name, description, image, start_date, end_date } = result.rows[0];
 
-  // console.log(techStack);
+  // Ambil tech stack (filter null jika project belum punya tech)
+  const techStack = result.rows
+    .filter((row) => row.tech_name !== null)
+    .map((row) => ({
+      name: row.tech_name,
+      icon: row.fa_icon,
+      url:
+        row.icons8_url ||
+        "https://img.icons8.com/?size=100&id=QMzLJhP7maxG&format=png&color=000000",
+      color: row.color_icon,
+    }));
 
   const project = {
     projectName: name,
     description,
     image,
-    technologies,
+    technologies: techStack,
     start_date,
     end_date,
   };
 
-  // const project = data.find((d) => d.id === Number(id));
-  res.render("projects/detail", { title: "Projects", project });
+  res.render("projects/detail", {
+    title: "Projects",
+    project,
+  });
 };
 
 export const addProject = async (req, res) => {
@@ -63,41 +102,94 @@ export const addProject = async (req, res) => {
     image,
   } = req.body;
 
-  let techArray;
+  // const tech = String(technologies);
 
-  // Cek apakah technologies sudah berupa array
-  if (Array.isArray(technologies)) {
-    techArray = technologies;
-  } else if (typeof technologies === "string" && technologies.length > 0) {
-    // Jika berupa string tunggal, buat jadi array 1 elemen
-    techArray = [technologies];
-  } else {
-    // Handle kasus jika datanya kosong atau tipe lainnya yang tidak valid
-    techArray = [];
-  }
+  console.log(req.body);
 
-  "['data1', 'data2']"
-
-  const quotedElements = techArray.map((t) => `'${t.toLowerCase()}'`); // 1. Bungkus setiap elemen dengan tanda kutip tunggal
-  const joinedElements = quotedElements.join(", "); // 2. Gabungkan elemen dengan koma dan spasi
-  const finalStringTechStack = `[${joinedElements}]`; // 3. Bungkus seluruh string dengan tanda kurung siku []
-
-  const newProject = await db.query(
+  const projectResult = await db.query(
     `INSERT INTO public.projects(
-      name, description, image, technologies, start_date, end_date
-    ) VALUES ($1, $2, $3, $4, $5, $6)
+      name, description, image, start_date, end_date
+    ) VALUES ($1, $2, $3, $4, $5) RETURNING id
   `,
-    [
-      projectName,
-      description,
-      image,
-      finalStringTechStack,
-      start_date,
-      end_date,
-    ]
+    [projectName, description, image, start_date, end_date]
   );
 
-  // console.log(newProject);
-  // res.send(data);
+  const projectId = projectResult.rows[0].id;
+
+  // Insert ke pivot table
+  if (technologies) {
+    const techArray = Array.isArray(technologies)
+      ? technologies
+      : [technologies];
+
+    for (const techId of techArray) {
+      await db.query(
+        `
+          INSERT INTO project_tech_stacks (project_id, tech_stack_id)
+          VALUES ($1, $2)
+          `,
+        [projectId, techId]
+      );
+    }
+  }
+
   res.redirect("/projects");
+};
+
+export const editProject = async (req, res) => {
+  const projectId = req.params.id;
+  const projectResult = await db.query("SELECT * FROM public.projects");
+  const techResult = await db.query("SELECT * FROM public.tech_stacks");
+
+  const projects = projectResult.rows.map((data) => {
+    return {
+      id: data.id,
+      projectName: data.name,
+      description: data.description,
+      image: data.image,
+      start_date: data.start_date,
+      end_date: data.end_date,
+    };
+  });
+
+  const project = projects.find((p) => p.id === Number(projectId));
+  const techs = techResult.rows;
+
+  const projectTechResult = await db.query(
+    "SELECT tech_stack_id FROM project_tech_stacks WHERE project_id = $1",
+    [projectId]
+  );
+
+  const projectTechIds = projectTechResult.rows.map((row) => row.tech_stack_id);
+
+  const techsWithChecked = techs.map((tech) => ({
+    ...tech,
+    checked: projectTechIds.includes(tech.id),
+  }));
+
+  const formatDate = (date) => {
+    return new Date(date).toISOString().split("T")[0];
+  };
+
+  project.start_date = formatDate(project.start_date);
+  project.end_date = formatDate(project.end_date);
+
+  console.log(project);
+
+  res.render("projects", {
+    title: "Projects",
+    typeTitleForm: "edit",
+    btnName: "update",
+    projects,
+    formUrl: `/projects/${project.id}?_method=PUT`,
+    project,
+    techs: techsWithChecked,
+  });
+};
+
+export const updateProject = async (req, res) => {
+  const projectId = Number(req.params.id);
+  const { projectName, description, image, start_date, end_date } = req.body;
+
+  res.send(req.body);
 };

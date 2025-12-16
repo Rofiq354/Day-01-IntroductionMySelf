@@ -38,12 +38,19 @@
               <h4>Technologies</h4>
 
               <div class="row row-cols-2 g-2">
-                <div class="col">
-                  <p class="mb-0">
-                    <i class="fa-brands fa-html5 me-2 text-danger"></i>
-                    {{project.technologies}}
-                  </p>
-                </div>
+                {{#each project.technologies as |t|}}
+                  <div class="col">
+                    <p class="mb-0 text-capitalize">
+                      <img
+                        src="{{t.url}}"
+                        alt="programming icon"
+                        width="30px"
+                      />
+
+                      {{t.name}}
+                    </p>
+                  </div>
+                {{/each}}
               </div>
             </div>
           </div>
