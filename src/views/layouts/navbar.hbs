@@ -29,24 +29,31 @@
             Project</a>
         </li>
       </ul>
-      <button
-        class="btn btn-outline-primary me-3"
-        type="button"
-        data-bs-toggle="modal"
-        data-bs-target="#authModal"
-        onclick="openLogin()"
-      >
-        Login
-      </button>
-      <button
-        class="btn btn-primary"
-        type="button"
-        data-bs-toggle="modal"
-        data-bs-target="#authModal"
-        onclick="openRegister()"
-      >
-        Register
-      </button>
+      {{#if user}}
+        <!-- user sudah login -->
+        <form action="/logout" method="post" class="mb-0">
+          <button type="submit" class="btn btn-danger">Logout</button>
+        </form>
+      {{else}}
+        <button
+          class="btn btn-outline-primary me-3"
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#authModal"
+          onclick="openLogin()"
+        >
+          Login
+        </button>
+        <button
+          class="btn btn-primary"
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#authModal"
+          onclick="openRegister()"
+        >
+          Register
+        </button>
+      {{/if}}
     </div>
   </div>
 </nav>

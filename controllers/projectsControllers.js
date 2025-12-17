@@ -1,8 +1,10 @@
 import db from "../config/db.js";
-import techIcon from "../helper/techIcon.js";
+import { formatDate, getDuration } from "../helper/getDuration.js";
 
 export const getProjects = async (req, res) => {
-  const projectResult = await db.query("SELECT * FROM public.projects");
+  const projectResult = await db.query(
+    "SELECT * FROM public.projects order by id"
+  );
   const techResult = await db.query("SELECT * FROM public.tech_stacks");
 
   const projects = projectResult.rows.map((data) => {
@@ -11,8 +13,7 @@ export const getProjects = async (req, res) => {
       projectName: data.name,
       description: data.description,
       image: data.image,
-      start_date: data.start_date,
-      end_date: data.end_date,
+      duration: getDuration(data.start_date, data.end_date),
     };
   });
 
@@ -60,8 +61,6 @@ export const getDetailProject = async (req, res) => {
     return res.status(404).send("Project not found");
   }
 
-  console.log(result);
-
   // Ambil data project dari baris pertama
   const { name, description, image, start_date, end_date } = result.rows[0];
 
@@ -82,8 +81,9 @@ export const getDetailProject = async (req, res) => {
     description,
     image,
     technologies: techStack,
-    start_date,
-    end_date,
+    start_date: formatDate(start_date),
+    end_date: formatDate(end_date),
+    duration: getDuration(start_date, end_date),
   };
 
   res.render("projects/detail", {
@@ -93,18 +93,10 @@ export const getDetailProject = async (req, res) => {
 };
 
 export const addProject = async (req, res) => {
-  const {
-    projectName,
-    start_date,
-    end_date,
-    technologies,
-    description,
-    image,
-  } = req.body;
+  const { projectName, start_date, end_date, technologies, description } =
+    req.body;
 
-  // const tech = String(technologies);
-
-  console.log(req.body);
+  const image = req.file?.filename;
 
   const projectResult = await db.query(
     `INSERT INTO public.projects(
@@ -138,7 +130,7 @@ export const addProject = async (req, res) => {
 
 export const editProject = async (req, res) => {
   const projectId = req.params.id;
-  const projectResult = await db.query("SELECT * FROM public.projects");
+  const projectResult = await db.query("SELECT * FROM public.projects order by id");
   const techResult = await db.query("SELECT * FROM public.tech_stacks");
 
   const projects = projectResult.rows.map((data) => {
@@ -174,8 +166,6 @@ export const editProject = async (req, res) => {
   project.start_date = formatDate(project.start_date);
   project.end_date = formatDate(project.end_date);
 
-  console.log(project);
-
   res.render("projects", {
     title: "Projects",
     typeTitleForm: "edit",
@@ -189,7 +179,70 @@ export const editProject = async (req, res) => {
 
 export const updateProject = async (req, res) => {
   const projectId = Number(req.params.id);
-  const { projectName, description, image, start_date, end_date } = req.body;
 
-  res.send(req.body);
+  if (!Number.isInteger(projectId)) {
+    return res.status(400).send("Invalid project ID");
+  }
+
+  const { projectName, start_date, end_date, technologies, description } =
+    req.body;
+
+  const image = req.file?.filename;
+
+  const projectImageResult = await db.query(
+    "SELECT image FROM public.projects where id = $1",
+    [projectId]
+  );
+  const projectImage = image || projectImageResult.rows[0].image;
+
+  // 1️⃣ Update tabel projects
+  await db.query(
+    `
+    UPDATE public.projects
+    SET
+      name = $1,
+      description = $2,
+      image = $3,
+      start_date = $4,
+      end_date = $5
+    WHERE id = $6
+    `,
+    [projectName, description, projectImage, start_date, end_date, projectId]
+  );
+
+  // 2️⃣ Reset pivot table
+  await db.query(`DELETE FROM project_tech_stacks WHERE project_id = $1`, [
+    projectId,
+  ]);
+
+  // 3️⃣ Insert ulang technologies
+  if (technologies) {
+    const techArray = Array.isArray(technologies)
+      ? technologies
+      : [technologies];
+
+    for (const techId of techArray) {
+      await db.query(
+        `
+        INSERT INTO project_tech_stacks (project_id, tech_stack_id)
+        VALUES ($1, $2)
+        `,
+        [projectId, techId]
+      );
+    }
+  }
+
+  res.redirect(`/projects`);
+};
+
+export const deleteProject = async (req, res) => {
+  const projectId = Number(req.params.id);
+
+  if (!Number.isInteger(projectId)) {
+    return res.status(400).send("Invalid project ID");
+  }
+
+  db.query("DELETE FROM public.projects WHERE id = $1", [projectId]);
+
+  res.redirect("/projects");
 };

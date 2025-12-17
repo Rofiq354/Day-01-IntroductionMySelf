@@ -8,7 +8,7 @@
         <!-- Image -->
         <div class="col-12 col-md-6">
           <img
-            src="/public/images/code.jpg"
+            src="/public/uploads/{{project.image}}"
             alt="code image"
             class="img-fluid rounded"
             style="height: 300px; width: 100%; object-fit: cover;"
@@ -24,12 +24,12 @@
 
               <p class="mb-1">
                 <i class="fa-regular fa-calendar-days me-2 text-secondary"></i>
-                12 Jan 2026 - 11 Feb 2026
+                {{project.start_date}} - {{project.end_date}}
               </p>
 
               <p class="fw-semibold">
                 <i class="fa-solid fa-hourglass-half me-2 text-secondary"></i>
-                1 Month
+                {{project.duration}}
               </p>
             </div>
 

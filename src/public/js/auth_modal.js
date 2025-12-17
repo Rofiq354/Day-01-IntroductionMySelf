@@ -27,3 +27,22 @@ function openLogin() {
 document.getElementById("authModal").addEventListener("hidden.bs.modal", () => {
   openLogin(); // default
 });
+
+function deleteData(project, el) {
+  const data = confirm(`apakah yakin project ${project} dihapus?`);
+  if (data) {
+    return (el.type = "submit");
+  }
+
+  return;
+}
+
+setTimeout(() => {
+  const toast = document.getElementById("toastMessage");
+  toast.classList.add("hide");
+
+  // Setelah animasi selesai, baru hilangkan dari layout
+  setTimeout(() => {
+    toast.style.display = "none";
+  }, 500); // harus sama dengan duration transition
+}, 3000);

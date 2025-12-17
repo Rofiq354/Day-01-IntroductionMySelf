@@ -1,6 +1,7 @@
 <main>
+  <!-- Form add my project -->
+  {{#if isLogin}}
   <section class="container-fluid bg-body-secondary py-5">
-    <!-- Form add my project -->
     <div class="container">
       <h1 class="text-center text-uppercase"><span id="type_heading">{{typeTitleForm}}</span> Project</h1>
       <form
@@ -9,6 +10,7 @@
         class="d-flex"
         method="post"
         style="flex-direction: column"
+        enctype="multipart/form-data"
       >
         <div class="mb-3">
           <label for="projectName" class="form-label">Project Name</label>
@@ -93,12 +95,13 @@
       </form>
     </div>
   </section>
+  {{/if}}
 
   <!-- My Project -->
   <section class="container-fluid bg-body-light py-5">
     <div class="container">
-      <h1 class="text-center">MY PROJECT</h1>
-      <div class="content mt-4">
+      <h1 class="text-center">PROJECTS</h1>
+      <div class="content mt-5">
         <div
           id="cardList"
           class="d-flex gap-3 flex-wrap justify-content-center"
@@ -106,7 +109,7 @@
           {{#each projects as |project|}}
             <div class="card" style="width: 18rem">
               <img
-                src="/public/images/code.jpg"
+                src="/public/uploads/{{project.image}}"
                 class="card-img-top"
                 height="150px"
                 alt="Code Image"
@@ -120,16 +123,28 @@
                   <h5>{{project.projectName}}</h5>
                 </a>
                 <h6 class="card-subtitle mb-2 text-body-secondary">
-                  <small> Durasi: 3 bulan </small>
+                  <small> Durasi: {{project.duration}} </small>
                 </h6>
                 <p class="card-text">
                   {{project.description}}
                 </p>
-                <a
-                  href="/projects/{{project.id}}/edit"
-                  class="btn btn-primary"
-                >Edit</a>
-                <a href="#" class="btn btn-primary">Delete</a>
+                {{#if ../isLogin}}
+                  <a
+                    href="/projects/{{project.id}}/edit"
+                    class="btn btn-primary"
+                  >Edit</a>
+                  <form action="/projects/{{project.id}}?_method=DELETE"
+                    method="post"
+                    class="mb-0 d-inline-block"
+                  >
+                    <button type="button"
+                    onclick="deleteData('{{project.projectName}}', this)"
+                    class="btn btn-primary"
+                    >
+                      Delete
+                    </button>
+                  </form>
+                {{/if}}
               </div>
             </div>
           {{/each}}

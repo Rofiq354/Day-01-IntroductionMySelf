@@ -11,7 +11,7 @@ export const handleRegister = async (req, res) => {
   );
 
   if (checkEmail.rows.length > 0) {
-    req.flash("error", "Email sudah terdaftar");
+    req.flash("error", "Register gagal, Email sudah terdaftar.");
     return res.redirect("/");
   }
 
@@ -26,7 +26,7 @@ export const handleRegister = async (req, res) => {
   );
 
   req.flash("success", "Registrasi berhasil, silakan login");
-  res.redirect("/");
+  res.redirect(req.get("referer") || "/");
 };
 
 export const handleLogin = async (req, res) => {
@@ -39,7 +39,7 @@ export const handleLogin = async (req, res) => {
   );
 
   if (result.rows.length === 0) {
-    req.flash("error", "Email atau password salah");
+    req.flash("error", "Login gagal, Email atau password salah");
     return res.redirect("/");
   }
 
@@ -49,7 +49,7 @@ export const handleLogin = async (req, res) => {
   const isMatch = await bcrypt.compare(password, user.password);
 
   if (!isMatch) {
-    req.flash("error", "Email atau password salah");
+    req.flash("error", "Login gagal, Email atau password salah");
     return res.redirect("/");
   }
 
@@ -61,11 +61,11 @@ export const handleLogin = async (req, res) => {
   };
 
   req.flash("success", "Login berhasil");
-  res.redirect("/");
+  res.redirect(req.get("referer") || "/");
 };
 
 export const logout = (req, res) => {
   req.session.destroy(() => {
-    res.redirect("/");
+    res.redirect(req.get("referer") || "/");
   });
 };
